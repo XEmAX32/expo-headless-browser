@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["ExpoHeadlessBrowserModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.headlessbrowser.ExpoHeadlessBrowserModule"]
+  }
+}
