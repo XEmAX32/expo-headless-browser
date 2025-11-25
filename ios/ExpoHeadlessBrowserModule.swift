@@ -3,31 +3,7 @@ import WebKit
 
 public class ExpoHeadlessBrowserModule: Module {
 
-    private let sessions = SessionManager()
-
-
-  private func evalJS(_ wv: WKWebView, _ js: String) async throws -> Any? {
-    try await withCheckedThrowingContinuation { cont in
-      DispatchQueue.main.async {
-        wv.evaluateJavaScript(js) { value, error in
-          if let error { cont.resume(throwing: error) } else { cont.resume(returning: value) }
-        }
-      }
-    }
-  }
-
-  private func waitForLoad(_ wv: WKWebView) async throws {
-    try await withCheckedThrowingContinuation { (cont: CheckedContinuation<Void, Error>) in
-      func check() {
-        if !wv.isLoading {
-          cont.resume()
-        } else {
-          DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { check() }
-        }
-      }
-      check()
-    }
-  }
+  private let sessions = SessionManager()
 
   public func definition() -> ModuleDefinition {
     Name("ExpoHeadlessBrowser")
@@ -98,6 +74,14 @@ public class ExpoHeadlessBrowserModule: Module {
 
     AsyncFunction("elementClickAsync") { (sessionId: String, elementId: String) async throws -> Bool in
         return try await self.sessions.elementClick(sessionId: sessionId, elementId: elementId)
+    }
+
+    AsyncFunction("wait") { (milliseconds: TimeInterval) async throws -> Bool in 
+        return try await self.sessions.wait(milliseconds: milliseconds)
+    }
+
+    AsyncFunction("waitForElement") { (sessionId: String, selector: String, timeout: TimeInterval) async throws -> Bool? in
+      return try await self.sessions.waitForElement(sessionId: sessionId, selector: selector, timeout: timeout)
     }
 
   }

@@ -127,6 +127,8 @@ All APIs return promises. Call `await browser.wait(ms)` to pause between actions
 
 ```ts
 const form = await browser.getElementByCss('form#credentials');
+if (!form) throw new Error('Form not found');
+
 const emailInput = await browser.executeScript<string>(`
   (function () {
     const el = document.querySelector('form#credentials input[type=email]');
@@ -135,7 +137,7 @@ const emailInput = await browser.executeScript<string>(`
   })();
 `);
 
-const submit = await form?.driver.getElementByCss('button[type=submit]');
+const submit = await browser.getElementByCss('form#credentials button[type=submit]');
 await submit?.click();
 await browser.wait(1500);
 ```

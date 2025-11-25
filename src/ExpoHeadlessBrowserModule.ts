@@ -45,10 +45,6 @@ export default class Driver {
     return _ExpoHeadlessBrowserModule.getPageHtmlAsync(this.sessionId);
   }
 
-  async wait(ms: number) {
-    return new Promise(res => setTimeout(res, ms));
-  }
-
   async executeScript<T = any>(script: string): Promise<T> {
     await this.ensureReady();
     return _ExpoHeadlessBrowserModule.executeScriptAsync(this.sessionId, script) as Promise<T>;
@@ -99,6 +95,17 @@ export default class Driver {
     const elementId = await _ExpoHeadlessBrowserModule.findElementByTextAsync(this.sessionId, text);
     return elementId ? new Element(this, elementId) : null;
   }
+
+  async wait(milliseconds: number): Promise<boolean | null> {
+    await this.ensureReady();
+    return _ExpoHeadlessBrowserModule.wait(milliseconds);
+  }
+
+  async waitForElement(selector: string, timeout: number): Promise<boolean | null> {
+    await this.ensureReady();
+    return _ExpoHeadlessBrowserModule.waitForElement(this.sessionId, selector, timeout)
+  }
+  
 }
 
 class Element {
