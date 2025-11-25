@@ -15,10 +15,11 @@ Pod::Spec.new do |s|
     :tvos => '15.1'
   }
   s.swift_version  = '5.9'
-  s.source         = { git: 'https://apeira.it' }
+  s.source         = { git: 'https://github.com/XEmAX32/expo-headless-browser' }
   s.static_framework = true
 
   s.dependency 'ExpoModulesCore'
+  s.frameworks   = "WebKit"
 
   # Swift/Objective-C compatibility
   s.pod_target_xcconfig = {

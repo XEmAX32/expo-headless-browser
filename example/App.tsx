@@ -1,60 +1,48 @@
-import { useEvent } from 'expo';
-import ExpoHeadlessBrowser, { ExpoHeadlessBrowserView } from 'expo-headless-browser';
-import { Button, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
+import Driver from "expo-headless-browser";
+import React, { useEffect, useState } from "react";
 
 export default function App() {
-  const onChangePayload = useEvent(ExpoHeadlessBrowser, 'onChange');
+  const [level, setLevel] = useState<number | null>(null);
+  const [info, setInfo] = useState<{
+    brand: string;
+    model: string;
+    os: string;
+    version: string;
+  } | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const driver = new Driver();
+      console.log('driver', driver)
+      await driver.get("https://apeira.it")
+      const titleEl = await driver.getElementsByCss(".text-cozy-copper");
+      try {
+        await driver.get("https://google.it")
+        console.log('title', await driver.getTitle());
+      } catch(err) {console.log('err',err)}
+    })();
+  }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text style={styles.header}>Module API Example</Text>
-        <Group name="Constants">
-          <Text>{ExpoHeadlessBrowser.PI}</Text>
-        </Group>
-        <Group name="Functions">
-          <Text>{ExpoHeadlessBrowser.hello()}</Text>
-        </Group>
-        <Group name="Async functions">
-          <Button
-            title="Set value"
-            onPress={async () => {
-              await ExpoHeadlessBrowser.setValueAsync('Hello from JS!');
-            }}
-          />
-        </Group>
-        <Group name="Events">
-          <Text>{onChangePayload?.value}</Text>
-        </Group>
-        <Group name="Views">
-          <ExpoHeadlessBrowserView
-            url="https://www.example.com"
-            onLoad={({ nativeEvent: { url } }) => console.log(`Loaded: ${url}`)}
-            style={styles.view}
-          />
-        </Group>
-      </ScrollView>
-    </SafeAreaView>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>ExpoNativeCalls Demo</Text>
+
+    </ScrollView>
   );
 }
 
-function Group(props: { name: string; children: React.ReactNode }) {
-  return (
-    <View style={styles.group}>
-      <Text style={styles.groupHeader}>{props.name}</Text>
-      {props.children}
-    </View>
-  );
-}
 
 const styles = {
   header: {
     fontSize: 30,
     margin: 20,
+    marginTop: 100,
+    textAlign: 'center' as const,
   },
   groupHeader: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   group: {
     margin: 20,
@@ -65,9 +53,5 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: '#eee',
-  },
-  view: {
-    flex: 1,
-    height: 200,
   },
 };

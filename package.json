@@ -21,13 +21,13 @@
     "expo-headless-browser",
     "ExpoHeadlessBrowser"
   ],
-  "repository": "https://apeira.it",
+  "repository": "https://github.com/XEmAX32/expo-headless-browser",
   "bugs": {
-    "url": "https://apeira.it/issues"
+    "url": "https://github.com/XEmAX32/expo-headless-browser"
   },
   "author": "Emanuele Sacco <ema.sacco32@gmail.com> ()",
   "license": "MIT",
-  "homepage": "https://apeira.it#readme",
+  "homepage": "https://github.com/XEmAX32/expo-headless-browser#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/react": "~19.1.0",
