@@ -56,6 +56,8 @@ The package is published on npm: [expo-headless-browser](https://www.npmjs.com/p
 
 If you only need static HTTP fetches or HTML parsing, use `fetch` + `cheerio`. Reach for Expo Headless Browser when you must execute client-side JavaScript or interact with the DOM.
 
+Inspired by [Selenium](https://github.com/SeleniumHQ/selenium).
+
 ## Getting started
 
 ### Requirements
@@ -167,7 +169,6 @@ Because everything rides on standard Expo infrastructure, you can leverage OTA u
 - [ ] Screenshot and PDF capture helpers.
 - [ ] Built-in waits (`waitForElement`, `waitForNavigation`) exposed to JS.
 - [ ] Configurable user agents and HTTP headers per session.
-- [ ] CI example that runs scraping scripts on GitHub Actions.
 
 Track progress or propose new ideas via [GitHub Issues](https://github.com/XEmAX32/expo-headless-browser/issues).
 
