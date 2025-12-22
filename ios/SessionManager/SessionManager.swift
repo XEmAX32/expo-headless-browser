@@ -88,10 +88,6 @@ final class SessionManager {
         return try await _executeScript(sessionId: sessionId, script: script)
     }
     
-    func executeScript(sessionId: String, script: String) async throws -> [String] {
-        return try await _executeScript(sessionId: sessionId, script: script) ?? []
-    }
-    
     func dumpHtml(sessionId: String) async throws -> String? {
         let script = "document.documentElement.outerHTML"
     

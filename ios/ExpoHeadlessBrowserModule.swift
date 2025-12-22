@@ -32,7 +32,7 @@ public class ExpoHeadlessBrowserModule: Module {
         return try await self.sessions.getCurrentUrl(sessionId: sessionId)
     }
 
-    AsyncFunction("executeScriptAsync") { (sessionId: String, script: String) async throws -> Any? in
+    AsyncFunction("executeScriptAsync") { (sessionId: String, script: String) async throws -> String? in
         return try await self.sessions.executeScript(sessionId: sessionId, script: script)
     }
 
@@ -40,7 +40,7 @@ public class ExpoHeadlessBrowserModule: Module {
         return try await self.sessions.getElementByCss(sessionId: sessionId, selector: selector)
     }
 
-    AsyncFunction("getElementsByCssAsync") { (sessionId: String, selector: String) async throws -> [String] in
+    AsyncFunction("getElementsByCssAsync") { (sessionId: String, selector: String) async throws -> String? in
         return try await self.sessions.getElementsByCss(sessionId: sessionId, selector: selector)
     }
 
@@ -52,7 +52,7 @@ public class ExpoHeadlessBrowserModule: Module {
         return try await self.sessions.getElementByClassName(sessionId: sessionId, className: className)
     }
     
-    AsyncFunction("getElementsByClassNameAsync") { (sessionId: String, className: String) async throws -> [String] in
+    AsyncFunction("getElementsByClassNameAsync") { (sessionId: String, className: String) async throws -> String? in
         return try await self.sessions.getElementsByClassName(sessionId: sessionId, className: className)
     }
 
@@ -76,11 +76,11 @@ public class ExpoHeadlessBrowserModule: Module {
         return try await self.sessions.elementClick(sessionId: sessionId, elementId: elementId)
     }
 
-    AsyncFunction("wait") { (milliseconds: TimeInterval) async throws -> Bool in 
+    AsyncFunction("wait") { (milliseconds: Double) async throws -> Bool in
         return try await self.sessions.wait(milliseconds: milliseconds)
     }
 
-    AsyncFunction("waitForElement") { (sessionId: String, selector: String, timeout: TimeInterval) async throws -> Bool? in
+    AsyncFunction("waitForElement") { (sessionId: String, selector: String, timeout: Double) async throws -> String? in
       return try await self.sessions.waitForElement(sessionId: sessionId, selector: selector, timeout: timeout)
     }
 

@@ -2,7 +2,8 @@ extension SessionManager {
     func wait(
       milliseconds: TimeInterval = 10
     ) async throws -> Bool {
-      try await Task.sleep(nanoseconds: UInt64(milliseconds * 1_000_000))
+        try await Task.sleep(nanoseconds: UInt64(milliseconds * 1_000_000))
+        return true
     }
 
     func waitForElement(

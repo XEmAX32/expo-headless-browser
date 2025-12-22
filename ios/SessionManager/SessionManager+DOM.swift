@@ -18,7 +18,7 @@ extension SessionManager {
         return try await executeScript(sessionId: sessionId, script: script)
     }
     
-    func getElementsByCss(sessionId: String, selector: String) async throws -> [String] {
+    func getElementsByCss(sessionId: String, selector: String) async throws -> String? {
         let escaped = selector
           .replacingOccurrences(of: "'", with: "\\'")
           .replacingOccurrences(of: "\n", with: " ")
@@ -50,7 +50,7 @@ extension SessionManager {
         return try await executeScript(sessionId: sessionId, script: script)
     }
     
-    func getElementsByClassName(sessionId: String, className: String) async throws -> [String] {
+    func getElementsByClassName(sessionId: String, className: String) async throws -> String? {
         let escaped = className.replacingOccurrences(of: "'", with: "\\'")
         
         let script = """
@@ -172,7 +172,10 @@ extension SessionManager {
           })();
         """
         
-        return try await executeScript(sessionId: sessionId, script: script) as Bool
+        return Bool(
+            (try await executeScript(sessionId: sessionId, script: script))?
+                .lowercased() ?? "false"
+        ) ?? false
     }
     
     func setElementText(sessionId: String, elementId: String, text: String) async throws -> Bool {
@@ -181,7 +184,7 @@ extension SessionManager {
         let escapedText = text
             .replacingOccurrences(of: "'", with: "\\'")
             .replacingOccurrences(of: "\n", with: " ")
-
+        
         let script = """
           (function() {
             const el = window.__expoWD.byId('\(escapedId)');
@@ -191,7 +194,10 @@ extension SessionManager {
           })();
         """
         
-        return try await executeScript(sessionId: sessionId, script: script) as Bool
+        return Bool(
+            (try await executeScript(sessionId: sessionId, script: script))?
+                .lowercased() ?? "false"
+        ) ?? false
     }
     
 }
